@@ -1,9 +1,8 @@
 # ServiceNow: Rollback Import Sets
 
-
 ### Scope:
 
-Provide the functionality to rollback inserts and updates after transforming an Import Set.
+Provide the functionality to rollback inserts and updates after transforming an Import Set. ServiceNow share project can be found [here](https://developer.servicenow.com/connect.do#!/share/contents/7322031_rollback_import_sets?v=1&t=PRODUCT_DETAILS).
 
 ### Components:
 
