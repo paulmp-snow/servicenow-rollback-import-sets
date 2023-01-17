@@ -1,0 +1,1466 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2022-03-22 17:07:44">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description>Scope:
+
+Provide the functionality to rollback inserts and updates after transforming an Import Set.
+
+Components:
+
+1. Table: Rollback record (u_rollback_record)
+2. Script Include: RollbackImportsUtil
+3. UI Actions: Rollback Record, Rollback Records
+4. UI Policy: [ROLL] Make fields readonly
+
+Additions: added related list for rollback records on the Import Set form default view
+
+How to use:
+
+The way that the functionality works is that for each import set transform and for each import set row in that transform a rollback record is created that holds the initial values of the target record and the updated ones. The rollback record is then used to revert the target value to the previous values and also easily check for changes after transforms.
+
+For this to work a snapshot of the target record is needed before the transform starts and another snapshot after the transform ends. This can be done by adding to the transform map two scripts: onBefore and onComplete. 
+
+The onBefore script runs before any operation is done, for each row and can be used to determine the target. To create the first snapshot just use the following line:
+
+new RollbackImportsUtil().createRollbackRecord(source, target, action);
+
+The onComplete script runs only once when the transform is complete. At this stage the import rows should have the target set and we can get the updated values. To do that use the following line:
+
+new RollbackImportsUtil().updateRollbackRecordsAfterTranform(source);
+
+For a simple transform map this is all that is required to create the rollback records. For more complex ones with dynamic targets, call the createRollbackRecord method when required.
+
+In order to roll back the records you can use the UI Action from each individual rollback record or use the UI Action from the Transform History and rollback all records associated with that transformation.</description>
+<inserted/>
+<name>RollbackImports_v01</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>8f9075662f050110c4b1e36ef699b666</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:43</sys_created_on>
+<sys_id>426e2fcb2f1a4110c4b1e36ef699b654</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:43</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_number_2f83f5e62f050110c4b1e36ef699b6f9</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_number"><sys_number action="INSERT_OR_UPDATE"><category display_value="" name="u_rollback_record">u_rollback_record</category><maximum_digits>7</maximum_digits><number>1000</number><prefix>ROLL</prefix><sys_class_name>sys_number</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:35:32</sys_created_on><sys_id>2f83f5e62f050110c4b1e36ef699b6f9</sys_id><sys_mod_count>0</sys_mod_count><sys_name>ROLL</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_number_2f83f5e62f050110c4b1e36ef699b6f9</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:35:32</sys_updated_on></sys_number></record_update>]]></payload>
+<payload_hash>942756138</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>026e2f4f2f1a4110c4b1e36ef699b6da</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68ade3990000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table/>
+<target_name>ROLL</target_name>
+<type>Number</type>
+<update_domain>global</update_domain>
+<update_guid>fb8339e6c8050110cd2bca68adcd6627</update_guid>
+<update_guid_history>fb8339e6c8050110cd2bca68adcd6627:942756138</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_section_84e4356a2f050110c4b1e36ef699b6bc</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_section caption="" section_id="84e4356a2f050110c4b1e36ef699b6bc" sys_domain="global" table="u_rollback_record" version="3" view=""><sys_ui_element action="INSERT_OR_UPDATE"><element>u_number</element><position>0</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>2025f96a2f050110c4b1e36ef699b6ea</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_source_table</element><position>1</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>a025f96a2f050110c4b1e36ef699b6ea</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_target_table</element><position>2</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>2425f96a2f050110c4b1e36ef699b6ea</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_target_record</element><position>3</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>a425f96a2f050110c4b1e36ef699b6ea</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_operation</element><position>4</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>2825f96a2f050110c4b1e36ef699b6ea</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.split</element><position>5</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>a825f96a2f050110c4b1e36ef699b6ea</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type>.split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_import_set</element><position>6</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>2c25f96a2f050110c4b1e36ef699b6ea</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_import_set_row</element><position>7</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>ac25f96a2f050110c4b1e36ef699b6ea</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_import_set_run</element><position>8</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>2025f96a2f050110c4b1e36ef699b6eb</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_state</element><position>9</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>a025f96a2f050110c4b1e36ef699b6eb</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.end_split</element><position>10</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>2425f96a2f050110c4b1e36ef699b6eb</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type>.end_split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_initial_values</element><position>11</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>a425f96a2f050110c4b1e36ef699b6eb</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>u_updated_values</element><position>12</position><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:42:26</sys_created_on><sys_id>2825f96a2f050110c4b1e36ef699b6eb</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="u_rollback_record" sys_domain="global" view="Default view">84e4356a2f050110c4b1e36ef699b6bc</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:42:26</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_section action="INSERT_OR_UPDATE"><caption/><header>false</header><name>u_rollback_record</name><roles/><sys_class_name>sys_ui_section</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:41:18</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>84e4356a2f050110c4b1e36ef699b6bc</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_rollback_record</sys_name><sys_overrides/><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_section_84e4356a2f050110c4b1e36ef699b6bc</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:41:18</sys_updated_on><sys_user/><title>true</title><view display_value="Default view" name="NULL">Default view</view><view_name/></sys_ui_section></sys_ui_section></record_update>]]></payload>
+<payload_hash>1071848850</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>026e2f4f2f1a4110c4b1e36ef699b6dd</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b4301c0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record</target_name>
+<type>Form Layout</type>
+<update_domain>global</update_domain>
+<update_guid>e425f96a2b050110a36912eee0a8e9ed</update_guid>
+<update_guid_history>e425f96a2b050110a36912eee0a8e9ed:1071848850,40e4396a240501106a6e50a6ffc9029e:680862884,c8e4356a99050110d752c95c09b6e7bf:-1258779938</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_import_set</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_import_set" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Import set&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_import_set&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value="Reference"&gt;reference&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;32&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference display_value="" name="sys_import_set"&gt;sys_import_set&lt;/reference&gt;&lt;reference_cascade_rule&gt;delete&lt;/reference_cascade_rule&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:36:13&lt;/sys_created_on&gt;&lt;sys_id&gt;359379e62f050110c4b1e36ef699b6ba&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Import set&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_import_set&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-03-15 12:39:46&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>981016534</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>026e2fcb2f1a4110c4b1e36ef699b655</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f8d97728a0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Import set</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>7cfdae38f25a4110be7c5df4f5f42951</update_guid>
+<update_guid_history>7cfdae38f25a4110be7c5df4f5f42951:981016534,31b3f9e6e8050110ad6f8aa437c81055:-2054744818</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_target_record_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_target_record" label="Target record" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_target_record</element><help/><hint/><label>Target record</label><language>en</language><name>u_rollback_record</name><plural>Target records</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:39:04</sys_created_on><sys_id>df54f92a2f050110c4b1e36ef699b67d</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Target record</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_target_record_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:39:04</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>510801181</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>066e2f4f2f1a4110c4b1e36ef699b6d9</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b11db70000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Target record</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>e754f92abf05011030d51d0978958588</update_guid>
+<update_guid_history>e754f92abf05011030d51d0978958588:510801181</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_aaa5f1aa2f050110c4b1e36ef699b698</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_import_set_row</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:44:45</sys_created_on><sys_id>aaa5f1aa2f050110c4b1e36ef699b698</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_import_set_row</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_aaa5f1aa2f050110c4b1e36ef699b698</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:44:45</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>-584048039</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>066e2f4f2f1a4110c4b1e36ef699b6dc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b6504c0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_import_set_row</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>26a5f1aa7e0501108aeff972bb6cd79a</update_guid>
+<update_guid_history>26a5f1aa7e0501108aeff972bb6cd79a:-584048039</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_number_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_number" label="Number" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_number</element><help/><hint/><label>Number</label><language>en</language><name>u_rollback_record</name><plural>Numbers</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:35:33</sys_created_on><sys_id>7f8339e62f050110c4b1e36ef699b610</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Number</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_number_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:35:33</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>-1618470241</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>0a6e2f4f2f1a4110c4b1e36ef699b6d8</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68ade36a0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Number</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>bf8339e6a80501102d46b42b73cea719</update_guid>
+<update_guid_history>bf8339e6a80501102d46b42b73cea719:-1618470241</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_7195f1aa2f050110c4b1e36ef699b6b1</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_import_set</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:44:37</sys_created_on><sys_id>7195f1aa2f050110c4b1e36ef699b6b1</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_import_set</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_7195f1aa2f050110c4b1e36ef699b6b1</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:44:37</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>1488182947</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>0a6e2f4f2f1a4110c4b1e36ef699b6db</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b6313b0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_import_set</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>2ca535aa9c050110297ddc669669b9a8</update_guid>
+<update_guid_history>2ca535aa9c050110297ddc669669b9a8:1488182947</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_target_record</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_target_record" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Target record&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent&gt;u_target_table&lt;/dependent&gt;&lt;dependent_on_field&gt;u_target_table&lt;/dependent_on_field&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_target_record&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value=""&gt;document_id&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;32&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:39:04&lt;/sys_created_on&gt;&lt;sys_id&gt;e644b92a2f050110c4b1e36ef699b67c&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Target record&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_target_record&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-17 15:39:39&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;true&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1657602047</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>0a6e2fcb2f1a4110c4b1e36ef699b656</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b1a4190000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Target record</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>3374bd2a6505011019b8eb3ce2f98c56</update_guid>
+<update_guid_history>3374bd2a6505011019b8eb3ce2f98c56:-1657602047,5354f92abb050110d718ab021969f187:-1638406371</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_import_set_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_import_set" label="Import set" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_import_set</element><help/><hint/><label>Import set</label><language>en</language><name>u_rollback_record</name><plural>Import sets</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:36:13</sys_created_on><sys_id>a1b3b5e62f050110c4b1e36ef699b6ae</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Import set</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_import_set_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:36:13</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>-599790845</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>0e6e2f4f2f1a4110c4b1e36ef699b6d7</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68ae83890000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Import set</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>b5b3f9e670050110f42cd30270822656</update_guid>
+<update_guid_history>b5b3f9e670050110f42cd30270822656:-599790845</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_3d7571aa2f050110c4b1e36ef699b676</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_policy"&gt;&lt;sys_ui_policy action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;conditions/&gt;&lt;description/&gt;&lt;global&gt;true&lt;/global&gt;&lt;inherit&gt;false&lt;/inherit&gt;&lt;isolate_script&gt;true&lt;/isolate_script&gt;&lt;model_id/&gt;&lt;model_table/&gt;&lt;on_load&gt;true&lt;/on_load&gt;&lt;order&gt;100&lt;/order&gt;&lt;reverse_if_false&gt;true&lt;/reverse_if_false&gt;&lt;run_scripts&gt;false&lt;/run_scripts&gt;&lt;script_false&gt;&lt;![CDATA[function onCondition() {
+
+}]]&gt;&lt;/script_false&gt;&lt;script_true&gt;&lt;![CDATA[function onCondition() {
+
+}]]&gt;&lt;/script_true&gt;&lt;set_values/&gt;&lt;short_description&gt;[ROLL] Make fields readonly&lt;/short_description&gt;&lt;sys_class_name&gt;sys_ui_policy&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:44:18&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;3d7571aa2f050110c4b1e36ef699b676&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;[ROLL] Make fields readonly&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_policy_3d7571aa2f050110c4b1e36ef699b676&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-03-17 07:25:02&lt;/sys_updated_on&gt;&lt;table&gt;u_rollback_record&lt;/table&gt;&lt;ui_type&gt;0&lt;/ui_type&gt;&lt;view/&gt;&lt;/sys_ui_policy&gt;&lt;/record_update&gt;</payload>
+<payload_hash>487159984</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>0e6e2f4f2f1a4110c4b1e36ef699b6da</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f96c402c30000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>[ROLL] Make fields readonly</target_name>
+<type>UI Policy</type>
+<update_domain>global</update_domain>
+<update_guid>f91933994f1ec110e34b2b0ed26f3ae1</update_guid>
+<update_guid_history>f91933994f1ec110e34b2b0ed26f3ae1:487159984,99461e301a1a411085533cfa4f9f2b19:-1615433339,9f36da30e51a4110407f3a214ce9374e:487159984,0095fd6a0005011047504775e12ccc71:98987478</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_number</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_number" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes&gt;ignore_filter_on_new=true&lt;/attributes&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Number&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value&gt;javascript:global.getNextObjNumberPadded();&lt;/default_value&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_number&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value="String"&gt;string&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;40&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;true&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:35:32&lt;/sys_created_on&gt;&lt;sys_id&gt;af83f5e62f050110c4b1e36ef699b6ff&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Number&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_number&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-17 15:43:05&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>708081228</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>0e6e2fcb2f1a4110c4b1e36ef699b655</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b4ca450000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Number</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>d645bd6a87050110efd7691c5b7b2b8c</update_guid>
+<update_guid_history>d645bd6a87050110efd7691c5b7b2b8c:708081228,3b8339e6f90501106d36a84e14a07218:608617189</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_state_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_state" label="State" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_state</element><help>State of the rollback record.</help><hint>State of the rollback record.</hint><label>State</label><language>en</language><name>u_rollback_record</name><plural>States</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:41:11</sys_created_on><sys_id>9ed4b16a2f050110c4b1e36ef699b69d</sys_id><sys_mod_count>1</sys_mod_count><sys_name>State</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_state_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-15 10:38:47</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>-681519411</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>426e2f4f2f1a4110c4b1e36ef699b6d9</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f8d28ac680000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.State</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>94429ab460d641105ea4229387b59378</update_guid>
+<update_guid_history>94429ab460d641105ea4229387b59378:-681519411,ded4f56a9e0501105d13099859c823bf:-265017251</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_9a0635aa2f050110c4b1e36ef699b6c8</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_updated_values</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:46:23</sys_created_on><sys_id>9a0635aa2f050110c4b1e36ef699b6c8</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_updated_values</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_9a0635aa2f050110c4b1e36ef699b6c8</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:46:23</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>-1957561505</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>426e2f4f2f1a4110c4b1e36ef699b6dc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b7cd730000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_updated_values</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>160635aa45050110ba4c365e954e77ca</update_guid>
+<update_guid_history>160635aa45050110ba4c365e954e77ca:-1957561505</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_initial_values_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_initial_values" label="Initial values" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_initial_values</element><help/><hint/><label>Initial values</label><language>en</language><name>u_rollback_record</name><plural>Initial values</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:37:11</sys_created_on><sys_id>ffe3312a2f050110c4b1e36ef699b685</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Initial values</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_initial_values_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:37:11</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>-1578223462</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>466e2f4f2f1a4110c4b1e36ef699b6d8</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68af64e20000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Initial values</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>b3e3312ae0050110b6d113d24c660b8e</update_guid>
+<update_guid_history>b3e3312ae0050110b6d113d24c660b8e:-1578223462</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_6ce571aa2f050110c4b1e36ef699b67e</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_source_table</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:45:42</sys_created_on><sys_id>6ce571aa2f050110c4b1e36ef699b67e</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_source_table</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_6ce571aa2f050110c4b1e36ef699b67e</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:45:42</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>1435871079</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>466e2f4f2f1a4110c4b1e36ef699b6db</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b72fea0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_source_table</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>a0e539aa7705011075c427269895955a</update_guid>
+<update_guid_history>a0e539aa7705011075c427269895955a:1435871079</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_db_object_eb5375e62f050110c4b1e36ef699b674</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_db_object"><sys_db_object action="INSERT_OR_UPDATE"><access>public</access><actions_access>false</actions_access><alter_access>false</alter_access><caller_access/><client_scripts_access>false</client_scripts_access><configuration_access>false</configuration_access><create_access>true</create_access><create_access_controls>false</create_access_controls><delete_access>true</delete_access><extension_model/><is_extendable>false</is_extendable><label>Rollback Record</label><live_feed_enabled>false</live_feed_enabled><name>u_rollback_record</name><number_ref display_value="ROLL">2f83f5e62f050110c4b1e36ef699b6f9</number_ref><provider_class/><read_access>true</read_access><scriptable_table>false</scriptable_table><super_class/><sys_class_code/><sys_class_name>sys_db_object</sys_class_name><sys_class_path/><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:35:30</sys_created_on><sys_id>eb5375e62f050110c4b1e36ef699b674</sys_id><sys_mod_count>1</sys_mod_count><sys_name>Rollback Record</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_db_object_eb5375e62f050110c4b1e36ef699b674</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:35:32</sys_updated_on><update_access>true</update_access><user_role/><ws_access>true</ws_access></sys_db_object></record_update>]]></payload>
+<payload_hash>1060393815</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:43</sys_created_on>
+<sys_id>466e2fcb2f1a4110c4b1e36ef699b654</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68ade0af0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:43</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback Record</target_name>
+<type>Table</type>
+<update_domain>global</update_domain>
+<update_guid>eb83f5e64f050110a5ccbaa6921037fe</update_guid>
+<update_guid_history>eb83f5e64f050110a5ccbaa6921037fe:1060393815,6f83f5e6d80501106c23597b82278df8:-671093392</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_state</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_state" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;State&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_state&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value="String"&gt;string&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;50&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:41:11&lt;/sys_created_on&gt;&lt;sys_id&gt;70c4756a2f050110c4b1e36ef699b6c5&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;State&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_state&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-17 15:41:11&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-243338068</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>466e2fcb2f1a4110c4b1e36ef699b656</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b30cf40000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.State</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>5ad4f56ae1050110287365f858b0c8be</update_guid>
+<update_guid_history>5ad4f56ae1050110287365f858b0c8be:-243338068</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_updated_values</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_updated_values" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Updated values&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_updated_values&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value=""&gt;script_plain&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;8000&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:38:14&lt;/sys_created_on&gt;&lt;sys_id&gt;3a14752a2f050110c4b1e36ef699b6f9&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Updated values&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_updated_values&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-17 15:38:14&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1901383733</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>4a6e2f4f2f1a4110c4b1e36ef699b6d7</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b058050000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Updated values</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>cb24b52aed050110b338b282ea7ccbd9</update_guid>
+<update_guid_history>cb24b52aed050110b338b282ea7ccbd9:1901383733</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_bad74e702fd64110c4b1e36ef699b6e0</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;rollback_multiple_record&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.getValue('state') === "complete" &amp;amp;&amp;amp; new RollbackImportsUtil().hasRecordsForRollback(current);&lt;/condition&gt;&lt;form_action&gt;true&lt;/form_action&gt;&lt;form_button&gt;true&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;false&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;false&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style/&gt;&lt;messages/&gt;&lt;name&gt;Rollback records&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;-500&lt;/order&gt;&lt;script&gt;&lt;![CDATA[var rollbackStatus = new RollbackImportsUtil().rollbackRecords(current);
+if(rollbackStatus){
+	gs.addInfoMessage(gs.getMessage("Records rollback: successful - " + rollbackStatus.successful +"; total - " + rollbackStatus.total));
+}
+action.setRedirectURL(current);]]&gt;&lt;/script&gt;&lt;show_insert&gt;false&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-03-15 09:57:24&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;bad74e702fd64110c4b1e36ef699b6e0&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;Rollback records&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_bad74e702fd64110c4b1e36ef699b6e0&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-03-17 07:13:32&lt;/sys_updated_on&gt;&lt;table&gt;sys_import_set_run&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1324561788</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>4a6e2f4f2f1a4110c4b1e36ef699b6da</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f96b97ac90000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>sys_import_set_run</table>
+<target_name>Rollback records</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>11767f95fc1ec110c3d127b6a60bd70a</update_guid>
+<update_guid_history>11767f95fc1ec110c3d127b6a60bd70a:1324561788,93a69270a31a4110b85297f4a4e9118d:1901282620,954c86b481d641106b70c162e6c38fbf:211844893,4ec84e70f8d6411007f9286d378c41c2:1180077678</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_initial_values</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_initial_values" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Initial values&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_initial_values&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value=""&gt;script_plain&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;8000&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:37:11&lt;/sys_created_on&gt;&lt;sys_id&gt;88e3fde62f050110c4b1e36ef699b6da&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Initial values&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_initial_values&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-17 15:37:11&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1458540277</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>4a6e2fcb2f1a4110c4b1e36ef699b655</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68af64b40000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Initial values</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>3fe3312acc0501109ce8191cb422508c</update_guid>
+<update_guid_history>3fe3312acc0501109ce8191cb422508c:1458540277</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record__en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="" label="Rollback record" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element/><help/><hint/><label>Rollback record</label><language>en</language><name>u_rollback_record</name><plural>Rollback records</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:35:31</sys_created_on><sys_id>5783f5e62f050110c4b1e36ef699b6d7</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Rollback record</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record__en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:35:31</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>-1547735677</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>4e6e2f4f2f1a4110c4b1e36ef699b6d9</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68addfb30000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>6b83f5e619050110bb5e7e525b5d1df7</update_guid>
+<update_guid_history>6b83f5e619050110bb5e7e525b5d1df7:-1547735677</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_related_sys_import_set_null</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_related sys_domain="global" table="sys_import_set" version="2" view=""><sys_ui_related_list_entry action="INSERT_OR_UPDATE"><filter/><list_id display_value="Import Set - Default view" name="sys_import_set" related_list="NULL" sys_domain="global" view="Default view">f4c3a4a42f520110c4b1e36ef699b6e3</list_id><order_by/><position>0</position><related_list>sys_import_set_run.set</related_list><sys_class_name>sys_ui_related_list_entry</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-03-14 07:57:33</sys_created_on><sys_id>38c3eca42f520110c4b1e36ef699b696</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-14 07:57:33</sys_updated_on></sys_ui_related_list_entry><sys_ui_related_list_entry action="INSERT_OR_UPDATE"><filter/><list_id display_value="Import Set - Default view" name="sys_import_set" related_list="NULL" sys_domain="global" view="Default view">f4c3a4a42f520110c4b1e36ef699b6e3</list_id><order_by/><position>1</position><related_list>sys_import_set_row.sys_import_set</related_list><sys_class_name>sys_ui_related_list_entry</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-03-14 07:57:33</sys_created_on><sys_id>3cc3eca42f520110c4b1e36ef699b696</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-14 07:57:33</sys_updated_on></sys_ui_related_list_entry><sys_ui_related_list_entry action="INSERT_OR_UPDATE"><filter table="REL:bc6969c0ff0300105cf343d0653bf1b0">^ORDERBYDESCsys_created_on<item endquery="false" field="" goto="false" newquery="false" operator="ORDERBYDESC" or="false" value="sys_created_on"/></filter><list_id display_value="Import Set - Default view" name="sys_import_set" related_list="NULL" sys_domain="global" view="Default view">f4c3a4a42f520110c4b1e36ef699b6e3</list_id><order_by/><position>2</position><related_list>REL:bc6969c0ff0300105cf343d0653bf1b0</related_list><sys_class_name>sys_ui_related_list_entry</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-03-14 07:57:33</sys_created_on><sys_id>30c3eca42f520110c4b1e36ef699b697</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-14 07:57:33</sys_updated_on></sys_ui_related_list_entry><sys_ui_related_list_entry action="INSERT_OR_UPDATE"><filter table="import_set_flow_engine_context.import_set">^ORDERBYDESCsys_created_on<item endquery="false" field="" goto="false" newquery="false" operator="ORDERBYDESC" or="false" value="sys_created_on"/></filter><list_id display_value="Import Set - Default view" name="sys_import_set" related_list="NULL" sys_domain="global" view="Default view">f4c3a4a42f520110c4b1e36ef699b6e3</list_id><order_by/><position>3</position><related_list>import_set_flow_engine_context.import_set</related_list><sys_class_name>sys_ui_related_list_entry</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-03-14 07:57:33</sys_created_on><sys_id>34c3eca42f520110c4b1e36ef699b697</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-14 07:57:33</sys_updated_on></sys_ui_related_list_entry><sys_ui_related_list_entry action="INSERT_OR_UPDATE"><filter table="import_log.import_set">^ORDERBYDESCsys_created_on<item endquery="false" field="" goto="false" newquery="false" operator="ORDERBYDESC" or="false" value="sys_created_on"/></filter><list_id display_value="Import Set - Default view" name="sys_import_set" related_list="NULL" sys_domain="global" view="Default view">f4c3a4a42f520110c4b1e36ef699b6e3</list_id><order_by/><position>4</position><related_list>import_log.import_set</related_list><sys_class_name>sys_ui_related_list_entry</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-03-14 07:57:33</sys_created_on><sys_id>38c3eca42f520110c4b1e36ef699b697</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-14 07:57:33</sys_updated_on></sys_ui_related_list_entry><sys_ui_related_list_entry action="INSERT_OR_UPDATE"><filter/><list_id display_value="Import Set - Default view" name="sys_import_set" related_list="NULL" sys_domain="global" view="Default view">f4c3a4a42f520110c4b1e36ef699b6e3</list_id><order_by/><position>5</position><related_list>u_rollback_record.u_import_set</related_list><sys_class_name>sys_ui_related_list_entry</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-03-14 07:57:33</sys_created_on><sys_id>3cc3eca42f520110c4b1e36ef699b697</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-14 07:57:33</sys_updated_on></sys_ui_related_list_entry><sys_ui_related_list action="INSERT_OR_UPDATE"><calculated_name>Import Set - Default view</calculated_name><filter/><name>sys_import_set</name><order_by/><position/><related_list/><sys_class_name>sys_ui_related_list</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-03-14 07:57:33</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>f4c3a4a42f520110c4b1e36ef699b6e3</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Import Set - Default view</sys_name><sys_package display_value="System Import Sets" source="com.glide.system_import_set">29fd52c3a9223010c0a065f439e661a7</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_related_sys_import_set_null</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-14 07:57:33</sys_updated_on><sys_user/><view display_value="Default view" name="NULL">Default view</view><view_name/></sys_ui_related_list></sys_ui_related></record_update>]]></payload>
+<payload_hash>962622730</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>4e6e2f4f2f1a4110c4b1e36ef699b6dc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f876eb5b20000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>sys_import_set</table>
+<target_name>Import Set</target_name>
+<type>Related Lists</type>
+<update_domain>global</update_domain>
+<update_guid>74c3eca46552011021bf66af56288e99</update_guid>
+<update_guid_history>74c3eca46552011021bf66af56288e99:962622730,b8c3a4a4c2520110585ae205830ef3df:-619969089</update_guid_history>
+<update_set display_value=""/>
+<view>Default view</view>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_null</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;true&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label/&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element/&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value="Collection"&gt;collection&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;40&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass&gt;3&lt;/sizeclass&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:35:30&lt;/sys_created_on&gt;&lt;sys_id&gt;c78375e62f050110c4b1e36ef699b684&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;u_rollback_record&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_null&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-03-14 09:26:15&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1369414215</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>4e6e2fcb2f1a4110c4b1e36ef699b654</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f87bfe8cc0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>0418b02c0c9201109eb579e45411eec5</update_guid>
+<update_guid_history>0418b02c0c9201109eb579e45411eec5:1369414215,af83f5e682050110be7dbcaa98df44f5:-712280944</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_import_set_run_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_import_set_run" label="Import set run" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_import_set_run</element><help/><hint/><label>Import set run</label><language>en</language><name>u_rollback_record</name><plural>Import set runs</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:40:34</sys_created_on><sys_id>5db4f16a2f050110c4b1e36ef699b6d9</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Import set run</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_import_set_run_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:40:34</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>447577293</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>826e2f4f2f1a4110c4b1e36ef699b6d8</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b27cef0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Import set run</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>19b4f16a9005011037426118b92898e4</update_guid>
+<update_guid_history>19b4f16a9005011037426118b92898e4:447577293</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_66c5796a2f050110c4b1e36ef699b612</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_import_set_run</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:45:18</sys_created_on><sys_id>66c5796a2f050110c4b1e36ef699b612</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_import_set_run</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_66c5796a2f050110c4b1e36ef699b612</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:45:18</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>-580350149</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>826e2f4f2f1a4110c4b1e36ef699b6db</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b6cfd80000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_import_set_run</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>eec5796a750501100d54f32ea2ff6213</update_guid>
+<update_guid_history>eec5796a750501100d54f32ea2ff6213:-580350149</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_source_table</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_source_table" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Source table&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_source_table&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value=""&gt;table_name&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;80&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:37:49&lt;/sys_created_on&gt;&lt;sys_id&gt;0a04352a2f050110c4b1e36ef699b603&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Source table&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_source_table&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-17 15:37:49&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1766759155</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>826e2fcb2f1a4110c4b1e36ef699b656</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68aff6830000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Source table</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>8514352ab7050110c1ffd5d022ff89c7</update_guid>
+<update_guid_history>8514352ab7050110c1ffd5d022ff89c7:1766759155</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_action_029046a22f450110c4b1e36ef699b6d0</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_action"&gt;&lt;sys_ui_action action="INSERT_OR_UPDATE"&gt;&lt;action_name&gt;rollback_single_record&lt;/action_name&gt;&lt;active&gt;true&lt;/active&gt;&lt;client&gt;false&lt;/client&gt;&lt;client_script_v2&gt;&lt;![CDATA[function onClick(g_form) {
+
+}]]&gt;&lt;/client_script_v2&gt;&lt;comments/&gt;&lt;condition&gt;current.getValue('u_state') !== 'rollbacked' &amp;amp;&amp;amp; current.getValue('u_operation') !== 'ignored'&lt;/condition&gt;&lt;form_action&gt;true&lt;/form_action&gt;&lt;form_button&gt;true&lt;/form_button&gt;&lt;form_button_v2&gt;false&lt;/form_button_v2&gt;&lt;form_context_menu&gt;false&lt;/form_context_menu&gt;&lt;form_link&gt;false&lt;/form_link&gt;&lt;form_menu_button_v2&gt;false&lt;/form_menu_button_v2&gt;&lt;form_style/&gt;&lt;format_for_configurable_workspace&gt;false&lt;/format_for_configurable_workspace&gt;&lt;hint/&gt;&lt;isolate_script&gt;false&lt;/isolate_script&gt;&lt;list_action&gt;false&lt;/list_action&gt;&lt;list_banner_button&gt;false&lt;/list_banner_button&gt;&lt;list_button&gt;false&lt;/list_button&gt;&lt;list_choice&gt;false&lt;/list_choice&gt;&lt;list_context_menu&gt;false&lt;/list_context_menu&gt;&lt;list_link&gt;false&lt;/list_link&gt;&lt;list_save_with_form_button&gt;false&lt;/list_save_with_form_button&gt;&lt;list_style/&gt;&lt;messages/&gt;&lt;name&gt;Rollback record&lt;/name&gt;&lt;onclick/&gt;&lt;order&gt;-500&lt;/order&gt;&lt;script&gt;&lt;![CDATA[var rollbackStatus = new RollbackImportsUtil().rollbackRecord(current);
+if(rollbackStatus){
+	gs.addInfoMessage(gs.getMessage("Record rollback successful."));
+} else {
+	gs.addErrorMessage(gs.getMessage("Rollback error: missing rollback record or target record."));
+}
+action.setRedirectURL(current);]]&gt;&lt;/script&gt;&lt;show_insert&gt;false&lt;/show_insert&gt;&lt;show_multiple_update&gt;false&lt;/show_multiple_update&gt;&lt;show_query&gt;false&lt;/show_query&gt;&lt;show_update&gt;true&lt;/show_update&gt;&lt;sys_class_name&gt;sys_ui_action&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 16:38:55&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;029046a22f450110c4b1e36ef699b6d0&lt;/sys_id&gt;&lt;sys_mod_count&gt;5&lt;/sys_mod_count&gt;&lt;sys_name&gt;Rollback record&lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_action_029046a22f450110c4b1e36ef699b6d0&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-03-17 07:19:59&lt;/sys_updated_on&gt;&lt;table&gt;u_rollback_record&lt;/table&gt;&lt;ui11_compatible&gt;true&lt;/ui11_compatible&gt;&lt;ui16_compatible&gt;false&lt;/ui16_compatible&gt;&lt;/sys_ui_action&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1828015270</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>866e2f4f2f1a4110c4b1e36ef699b6da</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f96bf631c0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record</target_name>
+<type>UI Action</type>
+<update_domain>global</update_domain>
+<update_guid>3fe73319cc1ec11096c1170f9b3b528d</update_guid>
+<update_guid_history>3fe73319cc1ec11096c1170f9b3b528d:-1828015270,24b73bd5521ec1101431587cd9fd9635:238625530,5ca7bfd5301ec110a021cf24bf0afbb3:317650764,f9673bd52c1ec110d33671b574cf0722:1771185683,68f637d5971ec1104d7ac52fb0dea8c0:-2070841108,c5a61a30ce1a4110bc41d238266884f4:317650764,8d68a17053164110eaf1120e33d91949:-1350633307,fe1865b053564110c3341c59979efbfd:1398625665,00128e2621450110e47da73e4e85a44c:-2036877892</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_import_set_run</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_import_set_run" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Import set run&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_import_set_run&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value="Reference"&gt;reference&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;32&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference display_value="" name="sys_import_set_run"&gt;sys_import_set_run&lt;/reference&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:40:34&lt;/sys_created_on&gt;&lt;sys_id&gt;fca4b16a2f050110c4b1e36ef699b693&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;Import set run&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_import_set_run&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-03-14 11:02:45&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1009035446</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>866e2fcb2f1a4110c4b1e36ef699b655</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f881844290000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Import set run</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>b52e09a05216011059ce4a52f2c64ab1</update_guid>
+<update_guid_history>b52e09a05216011059ce4a52f2c64ab1:1009035446,ea8d68202b920110aa59123e98f5ea91:726074210,91b4f16ae3050110dbb96b52895d43e3:2085158568</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_updated_values_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_updated_values" label="Updated values" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_updated_values</element><help/><hint/><label>Updated values</label><language>en</language><name>u_rollback_record</name><plural>Updated values</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:38:14</sys_created_on><sys_id>0b243de62f050110c4b1e36ef699b63b</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Updated values</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_updated_values_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:38:14</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>821386874</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>8a6e2f4f2f1a4110c4b1e36ef699b6d9</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b0582a0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Updated values</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>4324b52a18050110949f74a86de98bdb</update_guid>
+<update_guid_history>4324b52a18050110949f74a86de98bdb:821386874</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_ead5f5aa2f050110c4b1e36ef699b631</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_operation</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:45:34</sys_created_on><sys_id>ead5f5aa2f050110c4b1e36ef699b631</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_operation</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_ead5f5aa2f050110c4b1e36ef699b631</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:45:34</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>933058431</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>8a6e2f4f2f1a4110c4b1e36ef699b6dc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b70f4a0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_operation</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>66d5f5aaac050110f027ffbe7cdc3233</update_guid>
+<update_guid_history>66d5f5aaac050110f027ffbe7cdc3233:933058431</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_source_table_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_source_table" label="Source table" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_source_table</element><help/><hint/><label>Source table</label><language>en</language><name>u_rollback_record</name><plural>Source tables</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:37:49</sys_created_on><sys_id>c914352a2f050110c4b1e36ef699b6c0</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Source table</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_source_table_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:37:49</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>1099581951</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>8e6e2f4f2f1a4110c4b1e36ef699b6d8</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68aff6a00000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Source table</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>0d14352a5105011025b6c35faca019c8</update_guid>
+<update_guid_history>0d14352a5105011025b6c35faca019c8:1099581951</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_880675aa2f050110c4b1e36ef699b636</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_target_table</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:46:14</sys_created_on><sys_id>880675aa2f050110c4b1e36ef699b636</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_target_table</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_880675aa2f050110c4b1e36ef699b636</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:46:14</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>-1305494573</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>8e6e2f4f2f1a4110c4b1e36ef699b6db</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b7a9bd0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_target_table</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>140675aab305011057c66fa456b21c38</update_guid>
+<update_guid_history>140675aab305011057c66fa456b21c38:-1305494573</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_script_include_4f46fdaa2f050110c4b1e36ef699b65c</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;public&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;global.RollbackImportsUtil&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;true&lt;/client_callable&gt;&lt;description/&gt;&lt;name&gt;RollbackImportsUtil&lt;/name&gt;&lt;script&gt;&lt;![CDATA[var RollbackImportsUtil = Class.create();
+RollbackImportsUtil.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    /*
+     * @author Paul Paduraru
+     * @description rollbacks the selected record
+     * @param {GlideRecord} rollbackGR: record that will be rollbacked
+     * @returns {boolean} returns true if successful
+     */
+
+    rollbackRecord: function (rollbackGR) {
+
+        if (!rollbackGR) {
+            return false;
+        }
+
+        var targetGR = new GlideRecord(rollbackGR.getValue('u_target_table'));
+        if (targetGR.get(rollbackGR.getValue('u_target_record'))) {
+            targetGR.autoSysFields(false);
+            var operation = rollbackGR.getValue('u_operation');
+            if (operation == 'ignored') {
+                rollbackGR.u_state = 'ignored';
+            }
+            if (operation == 'inserted') {
+                targetGR.deleteRecord();
+                rollbackGR.u_state = 'rollbacked';
+            }
+            if (operation == 'updated') {
+                var evaluator = new GlideScopedEvaluator();
+                var updatedValuesJSON = evaluator.evaluateScript(rollbackGR, 'u_initial_values', null);
+                for (var field in updatedValuesJSON) {
+                    targetGR[field] = updatedValuesJSON[field].value;
+                }
+                targetGR.update();
+                rollbackGR.u_state = 'rollbacked';
+            }
+
+            rollbackGR.update();
+            return true;
+        } else {
+            return false;
+        }
+
+    },
+
+    /*
+     * @author Paul Paduraru
+     * @description rollbacks all records associated with the specified sys_import_set_run
+     * @param {GlideRecord} importSetRun: sys_import_set_run record
+     * @returns {object} number of records and count of successful rollbacks
+     */
+
+    rollbackRecords: function (importSetRun) {
+
+        if (!importSetRun) return null;
+        var successfulRollbackCount = 0;
+        var rollBackRecord = new GlideRecord('u_rollback_record');
+        rollBackRecord.addQuery('u_import_set_run', importSetRun.getUniqueValue());
+        rollBackRecord.query();
+        while (rollBackRecord.next()) {
+            var rollbackStatus = this.rollbackRecord(rollBackRecord);
+            if (rollbackStatus) {
+                successfulRollbackCount++;
+            }
+        }
+
+        return {
+            total: rollBackRecord.getRowCount(),
+            successful: successfulRollbackCount
+        };
+    },
+
+
+    /*
+     * @author Paul Paduraru
+     * @description retrieve the currently running transform for the specified import set
+     * @param {string} importSet: sys_id of the sys_import_set record
+     * @returns {string} sys_id of the Transform History (sys_import_set_run) record
+     */
+
+    getTransformHistory: function (importSet) {
+
+        if (!importSet) return false;
+
+        var importSetRun = new GlideRecord('sys_import_set_run');
+        importSetRun.addQuery('set', importSet);
+        importSetRun.addQuery('state', 'running');
+        importSetRun.query();
+        if (importSetRun.next()) {
+            return importSetRun.getUniqueValue();
+        } else {
+            return false;
+        }
+    },
+
+    /*
+     * @author Paul Paduraru
+     * @description creates an inital snapshot of the target record, to be used in onBefore transform scripts
+     * @param {GlideRecord} source: object from transform script
+     * @param {GlideRecord} target: object from transform script
+     * @param {string} action: value from transform script
+     * @returns {undefined}
+     */
+
+    createRollbackRecord: function (source, target, action) {
+
+        if (!source)
+            return null;
+        if (!target)
+            return null;
+        if (!action)
+            return false;
+
+        var targetJSON = this.glideRecordToJSON(target);
+        var initalValues = "(function(){\n\treturn" + JSON.stringify(targetJSON, null, 3) + ";})();";
+        var rollbackGR = new GlideRecord('u_rollback_record');
+        rollbackGR.initialize();
+        rollbackGR.u_initial_values = initalValues;
+        rollbackGR.u_import_set_run = this.getTransformHistory(source.getValue('sys_import_set'));
+        rollbackGR.u_source_table = source.getTableName();
+        rollbackGR.u_target_table = target.getTableName();
+        rollbackGR.u_import_set_row = source.getUniqueValue();
+        rollbackGR.u_import_set = source.getValue('sys_import_set');
+        rollbackGR.insert();
+
+    },
+
+    /*
+     * @author Paul Paduraru
+     * @description updates initial snapshot of the target record after transform is complete, to be used in onComplete transform scripts
+     * @param {GlideRecord} source: object from transform script
+     * @returns {undefined}
+     */
+
+    updateRollbackRecordsAfterTranform: function (source) {
+
+        if (!source)
+            return null;
+
+        var importSet = source.getValue('sys_import_set');
+        var rows = new GlideRecord(source.getTableName());
+        rows.addQuery('sys_import_set', importSet);
+        rows.query();
+        while (rows.next()) {
+            if (!rows.sys_target_sys_id.nil()) {
+                var targetGR = new GlideRecord(rows.getValue('sys_target_table'));
+                targetGR.get(rows.getValue('sys_target_sys_id'));
+                var targetJSON = this.glideRecordToJSON(targetGR);
+                var rollBackRecord = new GlideRecord('u_rollback_record');
+                rollBackRecord.addQuery('u_import_set_run', source.getValue('import_set_run'));
+                rollBackRecord.addQuery('u_import_set_row', rows.getUniqueValue());
+                rollBackRecord.query();
+                if (rollBackRecord.next()) {
+                    var updatedValues = "(function(){\n\treturn" + JSON.stringify(targetJSON, null, 3) + ";})();";
+                    rollBackRecord.u_state = 'created';
+                    rollBackRecord.u_operation = rows.getValue('sys_import_state');
+                    rollBackRecord.u_target_record = rows.getValue('sys_target_sys_id');
+                    rollBackRecord.u_import_set_run = rows.getValue('import_set_run');
+                    rollBackRecord.u_updated_values = updatedValues;
+                    rollBackRecord.update();
+                }
+            }
+        }
+    },
+
+    /*
+     * @author Paul Paduraru
+     * @description get all fields from GlideRecord and adds them to JSON object
+     * @param {GlideRecord} glideRecord: record that will be transformed
+     * @returns {object} JSON object containing all the fields with their value and display value
+     */
+
+    glideRecordToJSON: function (glideRecord) {
+
+        if (!glideRecord) {
+            return null;
+        }
+
+        var output = {};
+        var fields = glideRecord.getFields();
+        for (var i = 0; i &lt; fields.size(); i++) {
+            var glideElement = fields.get(i);
+            if (glideElement.hasValue()) {
+                output[glideElement.getName()] = {
+                    value: glideElement.getValue(),
+                    displayValue: glideElement.getDisplayValue()
+                };
+            }
+        }
+        return output;
+    },
+
+    /*
+     * @author Paul Paduraru
+     * @description check if Transform History has records for rollback
+     * @param {GlideRecord} importSetRun: record for which the check is done
+     * @returns {boolean} true if it has records, false otherwise
+     */
+
+    hasRecordsForRollback: function (importSetRun) {
+
+        if (!importSetRun) return false;
+
+        var rollbackRecordsCount = new global.GlideQuery('u_rollback_record')
+            .where('u_import_set_run', importSetRun.getUniqueValue())
+            .where('u_state', '!=', 'ignored')
+            .where('u_state', '!=', 'rollbacked')
+            .where('u_operation', '!=', 'ignored')
+            .count();
+
+        return rollbackRecordsCount ? true : false;
+    },
+    type: 'RollbackImportsUtil'
+});]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 16:32:07&lt;/sys_created_on&gt;&lt;sys_id&gt;4f46fdaa2f050110c4b1e36ef699b65c&lt;/sys_id&gt;&lt;sys_mod_count&gt;31&lt;/sys_mod_count&gt;&lt;sys_name&gt;RollbackImportsUtil&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_4f46fdaa2f050110c4b1e36ef699b65c&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-03-22 16:27:06&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1644826436</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>c26e2f4f2f1a4110c4b1e36ef699b6da</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17fb274165d0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table/>
+<target_name>RollbackImportsUtil</target_name>
+<type>Script Include</type>
+<update_domain>global</update_domain>
+<update_guid>0f152f0f2656411008746b7d0358feed</update_guid>
+<update_guid_history>0f152f0f2656411008746b7d0358feed:-1644826436,0abea0b641120110d01f82c72a6e3fc4:761976209,04f92670e65a4110de3ac1ac8c568fe1:1973061338,0f1b1670aa1a4110cf6d1f35b0365435:1539735961,b4e51ebcbbd641107c2a1c96d4bd6dc6:1741108951,4adcceb460d6411006b7c6abc74477e2:-710810901,be0c8234fad641106c237736ce6d99d0:954171749,cf5ac63411d64110236a945256060f20:-1405044200,42698230add64110562906ee40400cfb:1400712816,561906304ed64110ca7536cda17020e1:-2093497549,cf0102f87d96411023f9948f5fade607:-1585334083,fa5c6fe8895e0110e3c36f350d4e1a99:728905977,d18b6ba8af5e011077d045e4dff331a8:665905862,d5d96fe4b75e0110a0f7deecd422f66e:-1965315384,25a7ef24a15e011084f9c39af2e4cc5d:1552064399,3c1e1a600a5a011014f92cb48914ba00:270754523,81ea16aca81a01106772b18137b5b242:-416452959,295adaa4141a01106b21c53573f814f4:-1152608361,3b7f4a208d1a011022899b4983329c8e:-1267517645,7ede05e0c61601104e36d5c8474d9c2d:1226273747,886ec5a0e31601107cf7468591e0799d:-1186779975,aafa49e833d2011069e6e27122832040:406711992,0675bc28a19201107094b124b440a231:-852492247,b9c038e0f592011034edd3a04e855659:-1919319520,26fea86055920110a4d90b5affa712c9:-1503001600,473c68ac6d520110b85f07793ffdaf53:-55902758,f6d38447990101100fbe81edfc064603:-1344967154,d5234c071a01011085c649e749f7bfbc:884564824,f1820407aa010110145fd974424221f5:20384011,c18108c3a4010110bb944e2c9ac114aa:1190964519,0d0106e2c44501104c330382a73c5585:-2069235337,a080c2a2cb450110b219f6ea3102cfba:1832268047</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_section_ce0d40ce2f300110c4b1e36ef699b604</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_section caption="" section_id="ce0d40ce2f300110c4b1e36ef699b604" sys_domain="global" table="content_css" version="3" view=""><sys_ui_section action="INSERT_OR_UPDATE"><caption/><header>false</header><name>content_css</name><roles/><sys_class_name>sys_ui_section</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-03 08:34:57</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>ce0d40ce2f300110c4b1e36ef699b604</sys_id><sys_mod_count>0</sys_mod_count><sys_name>content_css</sys_name><sys_overrides/><sys_package display_value="UI Pages (define HTML pages and their processing)" source="com.glide.ui_page">19cd1a43a9223010c0a065f439e66100</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_section_ce0d40ce2f300110c4b1e36ef699b604</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-03 08:34:57</sys_updated_on><sys_user/><title>true</title><view display_value="Default view" name="NULL">Default view</view><view_name/></sys_ui_section></sys_ui_section></record_update>]]></payload>
+<payload_hash>-1787920830</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>true</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>c26e2f4f2f1a4110c4b1e36ef699b6dd</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f8dd746100000000</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table/>
+<target_name>Style Sheet</target_name>
+<type>Form Layout</type>
+<update_domain>global</update_domain>
+<update_guid>06ed7a38b79a4110c60bc8b47b51a43a</update_guid>
+<update_guid_history>06ed7a38b79a4110c60bc8b47b51a43a:-1787920830,1a0d40021170011018f326e6cb5f1bb8:917755787,960d4002e570011037beebc1539a73b2:-1787920830</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_import_set_row</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_import_set_row" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Import set row&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent&gt;u_source_table&lt;/dependent&gt;&lt;dependent_on_field&gt;u_source_table&lt;/dependent_on_field&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_import_set_row&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value=""&gt;document_id&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;32&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:36:48&lt;/sys_created_on&gt;&lt;sys_id&gt;2fb37de62f050110c4b1e36ef699b60f&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Import set row&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_import_set_row&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-17 15:40:09&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;true&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-245500583</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>c26e2fcb2f1a4110c4b1e36ef699b655</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b2184d0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Import set row</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>4f94716ac9050110bf8d6df0783c9921</update_guid>
+<update_guid_history>4f94716ac9050110bf8d6df0783c9921:-245500583,5ed3bde6f405011005d7ec7bb673bf83:1515833155</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_target_table_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_target_table" label="Target table" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_target_table</element><help/><hint/><label>Target table</label><language>en</language><name>u_rollback_record</name><plural>Target tables</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:38:38</sys_created_on><sys_id>b044792a2f050110c4b1e36ef699b645</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Target table</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_target_table_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:38:38</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>1853891731</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>c66e2f4f2f1a4110c4b1e36ef699b6d9</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b0b56f0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Target table</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>f044792a5d0501106297c074e2938c4d</update_guid>
+<update_guid_history>f044792a5d0501106297c074e2938c4d:1853891731</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_e2e575aa2f050110c4b1e36ef699b641</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_state</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:45:50</sys_created_on><sys_id>e2e575aa2f050110c4b1e36ef699b641</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_state</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_e2e575aa2f050110c4b1e36ef699b641</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:45:50</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>-756704065</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>c66e2f4f2f1a4110c4b1e36ef699b6dc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b74dd70000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_state</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>6ee575aa090501101c08d82a62cc8842</update_guid>
+<update_guid_history>6ee575aa090501101c08d82a62cc8842:-756704065</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_operation_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_operation" label="Operation" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_operation</element><help/><hint>State of the import set row as updated by the transfrom.</hint><label>Operation</label><language>en</language><name>u_rollback_record</name><plural>Operations</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:37:30</sys_created_on><sys_id>5804b12a2f050110c4b1e36ef699b6b2</sys_id><sys_mod_count>1</sys_mod_count><sys_name>Operation</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_operation_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-03-15 10:37:52</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>-1370230115</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>ca6e2f4f2f1a4110c4b1e36ef699b6d8</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f8d27d77c0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Operation</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>0302163c74d64110b9424434be1a9c64</update_guid>
+<update_guid_history>0302163c74d64110b9424434be1a9c64:-1370230115,e804b12aa50501102ee8b5207b9d5bba:-417656419</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_86f571aa2f050110c4b1e36ef699b69e</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_target_record</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:46:05</sys_created_on><sys_id>86f571aa2f050110c4b1e36ef699b69e</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_target_record</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_86f571aa2f050110c4b1e36ef699b69e</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:46:05</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>-346194689</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>ca6e2f4f2f1a4110c4b1e36ef699b6db</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b787280000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_target_record</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>02f571aa1c050110673bbba02a5ff2a0</update_guid>
+<update_guid_history>02f571aa1c050110673bbba02a5ff2a0:-346194689</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_target_table</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_target_table" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Target table&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_target_table&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value=""&gt;table_name&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;80&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:38:38&lt;/sys_created_on&gt;&lt;sys_id&gt;2534392a2f050110c4b1e36ef699b64c&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Target table&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_target_table&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-01-17 15:38:38&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>955013235</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>ca6e2fcb2f1a4110c4b1e36ef699b656</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b0b54c0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Target table</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>7c44792a8a0501105b17c142f6800c4b</update_guid>
+<update_guid_history>7c44792a8a0501105b17c142f6800c4b:955013235</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_documentation_u_rollback_record_u_import_set_row_en</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_documentation element="u_import_set_row" label="Import set row" language="en" table="u_rollback_record"><sys_documentation action="INSERT_OR_UPDATE"><element>u_import_set_row</element><help/><hint/><label>Import set row</label><language>en</language><name>u_rollback_record</name><plural>Import set rows</plural><sys_class_name>sys_documentation</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:36:49</sys_created_on><sys_id>dad3bde62f050110c4b1e36ef699b67a</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Import set row</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_documentation_u_rollback_record_u_import_set_row_en</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:36:49</sys_updated_on><url/><url_target/></sys_documentation></sys_documentation></record_update>]]></payload>
+<payload_hash>2142810927</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>ce6e2f4f2f1a4110c4b1e36ef699b6d7</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68af0bf10000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Import set row</target_name>
+<type>Field Label</type>
+<update_domain>global</update_domain>
+<update_guid>d2d3bde636050110b27a7df795c79585</update_guid>
+<update_guid_history>d2d3bde636050110b27a7df795c79585:2142810927</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_ui_policy_action_24d5fd2a2f050110c4b1e36ef699b6dc</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>u_initial_values</field><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-01-17 15:45:26</sys_created_on><sys_id>24d5fd2a2f050110c4b1e36ef699b6dc</sys_id><sys_mod_count>0</sys_mod_count><sys_name>u_initial_values</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_policy_action_24d5fd2a2f050110c4b1e36ef699b6dc</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-01-17 15:45:26</sys_updated_on><table>u_rollback_record</table><ui_policy display_value="RollbackImports Make fields readonly">3d7571aa2f050110c4b1e36ef699b676</ui_policy><visible>ignore</visible></sys_ui_policy_action></record_update>]]></payload>
+<payload_hash>-1849276787</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>ce6e2f4f2f1a4110c4b1e36ef699b6da</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17e68b6ef0f0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>u_initial_values</target_name>
+<type>UI Policy Action</type>
+<update_domain>global</update_domain>
+<update_guid>acd5f5aaff050110ac1c3bd4c892dd2f</update_guid>
+<update_guid_history>acd5f5aaff050110ac1c3bd4c892dd2f:-1849276787</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sys_dictionary_u_rollback_record_u_operation</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update&gt;&lt;sys_dictionary action="INSERT_OR_UPDATE" element="u_operation" table="u_rollback_record"&gt;&lt;active&gt;true&lt;/active&gt;&lt;array&gt;false&lt;/array&gt;&lt;array_denormalized&gt;false&lt;/array_denormalized&gt;&lt;attributes/&gt;&lt;audit&gt;false&lt;/audit&gt;&lt;calculation&gt;&lt;![CDATA[(function calculatedFieldValue(current) {
+
+
+})(current);]]&gt;&lt;/calculation&gt;&lt;choice/&gt;&lt;choice_field/&gt;&lt;choice_table/&gt;&lt;column_label&gt;Operation&lt;/column_label&gt;&lt;comments/&gt;&lt;create_roles/&gt;&lt;default_value/&gt;&lt;defaultsort/&gt;&lt;delete_roles/&gt;&lt;dependent/&gt;&lt;dependent_on_field/&gt;&lt;display&gt;false&lt;/display&gt;&lt;dynamic_creation&gt;false&lt;/dynamic_creation&gt;&lt;dynamic_creation_script/&gt;&lt;dynamic_default_value/&gt;&lt;dynamic_ref_qual/&gt;&lt;element&gt;u_operation&lt;/element&gt;&lt;element_reference&gt;false&lt;/element_reference&gt;&lt;foreign_database/&gt;&lt;function_definition/&gt;&lt;function_field&gt;false&lt;/function_field&gt;&lt;internal_type display_value="String"&gt;string&lt;/internal_type&gt;&lt;mandatory&gt;false&lt;/mandatory&gt;&lt;max_length&gt;50&lt;/max_length&gt;&lt;name&gt;u_rollback_record&lt;/name&gt;&lt;next_element/&gt;&lt;primary&gt;false&lt;/primary&gt;&lt;read_only&gt;false&lt;/read_only&gt;&lt;read_roles/&gt;&lt;reference/&gt;&lt;reference_cascade_rule/&gt;&lt;reference_floats&gt;false&lt;/reference_floats&gt;&lt;reference_key/&gt;&lt;reference_qual/&gt;&lt;reference_qual_condition/&gt;&lt;reference_type/&gt;&lt;sizeclass/&gt;&lt;spell_check&gt;false&lt;/spell_check&gt;&lt;staged&gt;false&lt;/staged&gt;&lt;sys_class_name&gt;sys_dictionary&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-01-17 15:37:30&lt;/sys_created_on&gt;&lt;sys_id&gt;51f3712a2f050110c4b1e36ef699b6d6&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;Operation&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_dictionary_u_rollback_record_u_operation&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-03-14 10:33:19&lt;/sys_updated_on&gt;&lt;table_reference&gt;false&lt;/table_reference&gt;&lt;text_index&gt;false&lt;/text_index&gt;&lt;unique&gt;false&lt;/unique&gt;&lt;use_dependent_field&gt;false&lt;/use_dependent_field&gt;&lt;use_dynamic_default&gt;false&lt;/use_dynamic_default&gt;&lt;use_reference_qualifier&gt;simple&lt;/use_reference_qualifier&gt;&lt;virtual&gt;false&lt;/virtual&gt;&lt;widget/&gt;&lt;write_roles/&gt;&lt;xml_view&gt;false&lt;/xml_view&gt;&lt;/sys_dictionary&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1246972832</payload_hash>
+<remote_update_set display_value="RollbackImports_v01">426e2fcb2f1a4110c4b1e36ef699b654</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2022-03-22 17:07:44</sys_created_on>
+<sys_id>ce6e2fcb2f1a4110c4b1e36ef699b655</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>17f87fd4fbc0000001</sys_recorded_at>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2022-03-22 17:07:44</sys_updated_on>
+<table>u_rollback_record</table>
+<target_name>Rollback record.Operation</target_name>
+<type>Dictionary</type>
+<update_domain>global</update_domain>
+<update_guid>ea6749e870d20110aba4fbd08f9ff990</update_guid>
+<update_guid_history>ea6749e870d20110aba4fbd08f9ff990:1246972832,612745e8dfd20110fe8faca616e00324:-2035461586,6404b12ad8050110d86cf835fcbab9b9:1475773140</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
